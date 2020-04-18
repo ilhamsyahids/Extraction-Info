@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "server": "cd server && FLASK_APP=server.py flask run",
+    "client": "cd app && npm run serve"
+  }
+}
