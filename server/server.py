@@ -42,18 +42,21 @@ def searchPattern():
             for txt in sentences:
                 # Apply algorithm
                 if request.json['algorithm'] == 'Regex':
-                    if len(searchRegex(request.json['keyword'], txt)) != 0:
-                        res.append(element(file['name'], txt))
+                    res_regex = searchRegex(request.json['keyword'], txt)
+                    if len(res_regex) != 0:
+                        res.append(element(file['name'], txt, res_regex[0]))
                 if request.json['algorithm'] == 'Boyer':
-                    if searchBM(request.json['keyword'], txt) != -1:
-                        res.append(element(file['name'], txt))
+                    res_bm = searchBM(request.json['keyword'], txt)
+                    if res_bm != -1:
+                        res.append(element(file['name'], txt, res_bm))
                 if request.json['algorithm'] == 'KMP':
-                    if searchKMP(request.json['keyword'], txt) != -1:
-                        res.append(element(file['name'], txt))
+                    res_kmp = searchKMP(request.json['keyword'], txt)
+                    if res_kmp != -1:
+                        res.append(element(file['name'], txt, res_kmp))
     return jsonify({'data': res}), 200
 
-def element(filename, text):
-    return {'filename': filename, 'text': text }
+def element(filename, text, idx):
+    return {'filename': filename, 'text': text, 'idx': idx}
 
 if __name__ == '__main__':
     app.run(debug=True)

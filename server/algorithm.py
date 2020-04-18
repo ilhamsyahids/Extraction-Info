@@ -79,4 +79,4 @@ def searchBM(pattern, text):
 # Regex
 def searchRegex(pattern, text):
     import re
-    return re.findall(pattern.lower(), text.lower())
+    return [m.start(0) for m in re.finditer(pattern.lower(), text.lower())]

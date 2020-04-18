@@ -11,8 +11,7 @@
           class="mb-4"
           style="max-width:20rem;"
           :options="uploadOptions"
-        >
-        </b-form-select>
+        />
       </div>
       <b-form-file
         :state="Boolean(upload.files.length > 0)"
@@ -48,7 +47,7 @@
         placeholder="Enter something..."
         rows="3"
         max-rows="6"
-      ></b-form-textarea>
+      />
     </div>
     <div>
       <p>
@@ -60,8 +59,7 @@
         class="mb-4"
         style="max-width:20rem;"
         :options="algorithmOptions"
-      >
-      </b-form-select>
+      />
     </div>
 
     <h3>
@@ -72,7 +70,7 @@
 
     <template v-if="data">
     <h3>Extraction Result: </h3>
-      <h4>{{ renderKeyword }}</h4>
+      <h4>{{ `${renderKeyword} (${data.length})` }}</h4>
       <b-card
         v-for="(el, idx) in data"
         :key="idx"
@@ -84,9 +82,7 @@
         class="mb-4"
         body-class="text-center"
       >
-        <b-card-text>
-          {{ el.text }}
-        </b-card-text>
+        <b-card-text v-html="el.text" />
       </b-card>
     </template>
     <footer class="mt-4 mb-4">
@@ -107,7 +103,7 @@
             target="_blank"
             rel="noopener"
           >
-            <b-icon-person-fill></b-icon-person-fill>
+            <b-icon-person-fill />
           </a>
         </li>
       </ul>
@@ -182,8 +178,14 @@ export default {
       this.upload.keyword = this.keyword
       axios.post(process.env.VUE_APP_API_URL || "http://localhost:5000", this.upload)
         .then(res => {
-          this.data = res.data.data
+          String.prototype.splice = function(idx, rdx, str1, str2) {
+              return this.slice(0, idx) + str1 + this.slice(idx, idx + rdx) + str2 + this.slice(idx + rdx);
+          };
           this.renderKeyword = this.keyword
+          res.data.data.forEach(el => {
+            el.text = el.text.splice(el.idx, this.renderKeyword.length, "<b>", "</b>")
+          });
+          this.data = res.data.data
         }).catch(() => {
           console.log("At least one data is missing")
         })
