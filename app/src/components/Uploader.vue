@@ -6,10 +6,16 @@
         <b>Upload files:</b>
       </p>
       <div>
-        <b-form-select class="mb-4" style="max-width:20rem;" v-model="uploadSelected" :options="uploadOptions"></b-form-select>
+        <b-form-select
+          v-model="uploadSelected"
+          class="mb-4"
+          style="max-width:20rem;"
+          :options="uploadOptions"
+        >
+        </b-form-select>
       </div>
       <b-form-file
-        :state="Boolean(file)"
+        :state="Boolean(upload.files.length > 0)"
         style="max-width:35rem;"
         size="lg"
         :placeholder="'Choose ' + (uploadSelected == 'dir' ? 'directory' : 'files') + ' or drop it here...'"
@@ -33,6 +39,7 @@
         <b>Keyword:</b>
       </p>
       <b-form-textarea
+        :state="Boolean(keyword)"
         style="max-width: 40rem;margin-left: auto;margin-right:auto"
         type="text"
         name="keyword"
@@ -47,11 +54,20 @@
       <p>
         <b>Algorithm:</b>
       </p>
-      <b-form-select class="mb-4" style="max-width:20rem;" v-model="algorithm" :options="algorithmOptions"></b-form-select>
+      <b-form-select
+        v-model="algorithm"
+        :state="Boolean(algorithm)"
+        class="mb-4"
+        style="max-width:20rem;"
+        :options="algorithmOptions"
+      >
+      </b-form-select>
     </div>
 
     <h3>
-      <b-button @click="onUploadHandler()" variant="success">Upload</b-button>
+      <b-button @click="onUploadHandler()" variant="success">
+        Upload
+      </b-button>
     </h3>
 
     <template v-if="data">
@@ -120,7 +136,7 @@ export default {
       algorithmOptions: [
         { value: 'Regex', text: 'Regex' },
         { value: 'Boyer', text: 'Boyer-Moore' },
-        { value: 'KMP', text: 'KMP' }
+        { value: 'KMP', text: 'Knuth Morris Pratt' }
       ],
       uploadSelected: 'files',
       data: null,
@@ -164,12 +180,13 @@ export default {
     onUploadHandler() {
       this.upload.algorithm = this.algorithm
       this.upload.keyword = this.keyword
-      axios.post(process.env.VUE_APP_API_URL || "http://localhost:5000", this.upload).then(res => {
-        this.data = res.data.data
-        this.renderKeyword = this.keyword
-      }).catch(() => {
-        console.log("At least one data is missing")
-      })
+      axios.post(process.env.VUE_APP_API_URL || "http://localhost:5000", this.upload)
+        .then(res => {
+          this.data = res.data.data
+          this.renderKeyword = this.keyword
+        }).catch(() => {
+          console.log("At least one data is missing")
+        })
     }
   }
 };
