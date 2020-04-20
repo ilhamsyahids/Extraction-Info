@@ -17,9 +17,9 @@
         :state="Boolean(upload.files.length > 0)"
         style="max-width:35rem;"
         size="lg"
-        :placeholder="'Choose ' + (uploadSelected == 'dir' ? 'directory' : 'files') + ' or drop it here...'"
-        drop-placeholder="Drop here..."
+        :placeholder="'Choose ' + (uploadSelected == 'dir' ? 'directory' : 'files')"
         @change="filesChange($event.target.name, $event.target.files)"
+        no-drop
         multiple
         :directory="uploadSelected == 'dir'"
         :file-name-formatter="formatNames"
