@@ -82,6 +82,8 @@
         class="mb-4"
         body-class="text-center"
       >
+        <b-card-text v-html="el.date" />
+        <b-card-text v-html="el.number" />
         <b-card-text v-html="el.text" />
       </b-card>
     </template>
