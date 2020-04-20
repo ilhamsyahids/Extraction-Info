@@ -7,7 +7,7 @@ def date_regex() -> str:
   hari = r"([[Ss]enin|[Ss]elasa|[Rr]abu|[Kk]amis|[Jj]umat|[Ss]abtu|[Mm]inggu])"
   comma = "(\,*\s*)"
   dayMonthYear = "([\d]{1,2}\s*[jfmasond]\w*\s*\d{4})"
-  dateWord = "((\({0,1}[\d]{1,2}(\.|-|\/)[\d]{1,2}(\.|-|\/)[\d]{2,4}\){0,1}))"
+  dateWord = "((\({0,1}[\d]{1,2}(\.|-|\/)[\d]{1,2}(\.|-|\/)[\d]{2,4}\){0,1})|(\({1}[\d]{1,2}(\.|-|\/)[\d]{1,2}\){1}))"
   time = "\s([0-9]|0[0-9]|1[0-9]|2[0-3])(\:|\.)[0-5][0-9]\s([W]\w{2}){0,1}"
   pukul = "([Pp]ukul){0,1}"
   haricomma = hari + comma
