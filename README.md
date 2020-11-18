@@ -1,5 +1,10 @@
 # My Extraction Info 
 
+## Previews
+<img src="screenshot/init.png">
+<img src="screenshot/result1.png">
+<img src="screenshot/result2.png">
+
 ## Prerequisite
 Make sure you have installed:
 1. [node js](https://nodejs.org/en/)
